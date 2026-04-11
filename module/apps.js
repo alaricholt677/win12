@@ -1394,13 +1394,12 @@ let apps = {
         		extension = name_.substring(lastDotIndex); // e.g., ".txt"
     		}
 
-    		while (apps.explorer.traverseDirectory(tmp, finalName)) {
-                        finalName = `${baseName} (${counter})${extension}`;
-        		}
-        		counter++;
-    		}
+            while (apps.explorer.traverseDirectory(tmp, finalName)) {
+              finalName = `${baseName} (${counter})${extension}`;
+              counter++; 
+            }
     
-    		name_ = finalName;
+            name_ = finalName; // Now this is safely back inside the function
 
             // 检查是否是文件夹
             if (type === 'folder') {
