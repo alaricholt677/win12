@@ -605,6 +605,71 @@ toggletheme() 切换主题
 							</div>
 						</div>
 					</div>
+<div class="nowplaying">
+	<div class="wg nowplaying calc template">
+		<div class="titbar">
+			<a win12_title="更多" onmouseenter="showdescp(event)" onmouseleave="hidedescp(event)" class="a more notip" onclick="$('.wg.nowplaying>.titbar>.menu').toggleClass('show')">
+				<i class="bi bi-three-dots"></i>
+			</a>
+
+			<div class="menu">
+				<a win12_title="打开应用" class="a img openapp" onclick="$('.wg.nowplaying>.titbar>.menu').removeClass('show');hide_widgets();shownotice('NowPlaying')"
+				   onmouseenter="showdescp(event)" onmouseleave="hidedescp(event)">
+					<i class="bi bi-music-note-beamed"></i>
+				</a>
+
+				<a class="a move" win12_title="移动" onmouseenter="showdescp(event)" onclick="hidedescp(event); if (!edit_mode) { editMode(); }" onmouseleave="hidedescp(event)">
+					<i class="bi bi-arrows-move"></i>
+				</a>
+
+				<a class="a addtodt" win12_title="添加到桌面" onmouseenter="showdescp(event)" onclick="hidedescp(event); widgets.widgets.remove('nowplaying'); widgets.widgets.addToDesktop('nowplaying');" onmouseleave="hidedescp(event)">
+					<i class="bi bi-box-arrow-in-right"></i>
+				</a>
+
+				<a class="a delete" win12_title="删除" onmouseenter="showdescp(event)" onmouseleave="hidedescp(event)" onclick="hidedescp(event); $('.wg.nowplaying>.titbar>.menu').removeClass('show'); widgets.widgets.remove('nowplaying');">
+					<i class="bi bi-trash"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="content" onmousedown="widgetsMove(this.parentElement, event);" ontouchstart="widgetsMove(this.parentElement, event);">
+			<div class="container" style="grid-area: pow / pow / jian / chu; padding: 14px; text-align: center;">
+				<div style="font-size: 34px; line-height: 1; margin-bottom: 8px;">
+					<i class="bi bi-music-note-beamed"></i>
+				</div>
+
+				<div id="nowplaying-title" style="font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+					No track playing
+				</div>
+
+				<div id="nowplaying-artist" style="font-size: 12px; opacity: .75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+					Unknown Artist
+				</div>
+			</div>
+
+			<a style="grid-area: n4;" class="b" onclick="widgetNowPlaying.prev()">
+				<i class="bi bi-skip-back-fill"></i>
+			</a>
+
+			<a style="grid-area: n5;" class="b ans u" onclick="widgetNowPlaying.toggle()">
+				<i id="nowplaying-play-icon" class="bi bi-play-fill"></i>
+			</a>
+
+			<a style="grid-area: n6;" class="b" onclick="widgetNowPlaying.next()">
+				<i class="bi bi-skip-forward-fill"></i>
+			</a>
+
+			<a style="grid-area: n1 / n1 / n1 / chu;" class="b" onclick="widgetNowPlaying.randomTrack()">
+				<i class="bi bi-shuffle"></i>
+			</a>
+
+			<a style="grid-area: dot / dot / dot / ans;" class="b" onclick="widgetNowPlaying.stop()">
+				<i class="bi bi-stop-fill"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
 					<div class="weather">
 						<div class="wg weather template">
 							<div class="titbar">
