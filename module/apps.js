@@ -2859,6 +2859,10 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
             app.setView('home');
             const grid = root.querySelector('.homepage-grid');
             const status = root.querySelector('.homepage-status');
+            if (!grid || !status) {
+                console.error('AlaricHolt677 News homepage elements are missing.');
+                return;
+            }
             grid.replaceChildren();
             status.hidden = false;
             status.textContent = 'Loading news...';
@@ -2890,7 +2894,7 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                         image.src = article.image;
                         image.alt = '';
                         image.addEventListener('load', () => placeholder.hidden = true);
-                        image.addEventListener('error', () => image.remove());
+                        image.addEventListener('error', () => { image.remove(); placeholder.hidden = false; });
                         media.appendChild(image);
                     }
                     card.appendChild(media);
@@ -2934,18 +2938,31 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
             root.querySelector('.article-body').textContent = String(body);
             const image = root.querySelector('.article-image');
             const imageUrl = article.image || raw.imageURL || raw.image || '';
-            const placeholder = root.querySelector('.article-image-placeholder');
-            image.hidden = !imageUrl;
-            placeholder.hidden = !!imageUrl;
-            image.onerror = () => {
+            let placeholder = root.querySelector('.article-image-placeholder');
+            if (!placeholder) {
+                placeholder = document.createElement('div');
+                placeholder.className = 'article-image-placeholder';
+                const placeholderIcon = document.createElement('i');
+                placeholderIcon.className = 'bi bi-newspaper';
+                const placeholderText = document.createElement('span');
+                placeholderText.textContent = 'No image available';
+                placeholder.append(placeholderIcon, placeholderText);
+                image.parentNode.insertBefore(placeholder, image);
+            }
+            const showPlaceholder = () => {
                 image.hidden = true;
                 placeholder.hidden = false;
             };
-            image.onload = () => {
+            const showImage = () => {
                 image.hidden = false;
                 placeholder.hidden = true;
             };
-            if (imageUrl) image.src = imageUrl;
+            image.onerror = showPlaceholder;
+            image.onload = showImage;
+            if (imageUrl) {
+                placeholder.hidden = true;
+                image.src = imageUrl;
+            } else showPlaceholder();
             $('.window.alaricholt677-news>.titbar>p').text(title);
         }
     },
