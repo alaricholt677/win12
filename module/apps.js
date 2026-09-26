@@ -2825,6 +2825,33 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
             null;
         }
     },
+    alaricholt677News: {
+        currentArticle: null,
+        init: () => {},
+        open: (article) => {
+            apps.alaricholt677News.currentArticle = article;
+            openapp('alaricholt677-news');
+            window.requestAnimationFrame(() => {
+                const raw = article.raw || article;
+                const title = article.title || raw.name || raw.title || 'Untitled article';
+                const tags = article.category ||
+                    (Array.isArray(raw.tags) ? raw.tags.join(', ') : '');
+                const body = raw.content || raw.body || raw.description || raw.text ||
+                    JSON.stringify(raw, null, 2);
+                const root = document.getElementById('win-alaricholt677-news');
+                if (!root) return;
+                root.querySelector('.article-title').textContent = title;
+                root.querySelector('.article-tags').textContent = tags;
+                root.querySelector('.article-tags').hidden = !tags;
+                root.querySelector('.article-body').textContent = String(body);
+                const image = root.querySelector('.article-image');
+                const imageUrl = article.image || raw.imageURL || raw.image || '';
+                image.hidden = !imageUrl;
+                if (imageUrl) image.src = imageUrl;
+                $('.window.alaricholt677-news>.titbar>p').text(title);
+            });
+        }
+    },
     word: {
         init: () => {
             $('#win-word>.app-left>.focs>.home').css("display", "flex");

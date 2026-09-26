@@ -2420,4 +2420,26 @@ const windowMarkup = `	<div class="window defender" data-min-width="800" style="
 			</div>
 		</div>
 		</div>
-	</div>`;
+	</div>
+        <div class="window alaricholt677-news" data-min-width="520" style="width:min(900px,80%);height:min(720px,82%);">
+                <div class="resize-bar"></div>
+                <div class="titbar">
+                        <img src="icon/about.svg" class="icon">
+                        <p>AlaricHolt677 News</p>
+                        <div>
+                                <a class="a wbtg red" onclick="hidewin('alaricholt677-news')"><i class="bi bi-x-lg"></i></a>
+                                <a class="a wbtg max" onclick="maxwin('alaricholt677-news')"><i class="bi bi-app"></i></a>
+                                <a class="a wbtg" onclick="minwin('alaricholt677-news')"><i class="bi bi-dash-lg"></i></a>
+                        </div>
+                </div>
+                <div class="loadback"><img src="icon/about.svg" class="icon"></div>
+                <div class="content" id="win-alaricholt677-news" style="overflow:auto;padding:28px;box-sizing:border-box;">
+                        <article style="max-width:760px;margin:0 auto;">
+                                <img class="article-image" alt="" style="display:block;width:100%;max-height:320px;object-fit:cover;border-radius:14px;margin-bottom:22px;" hidden>
+                                <h1 class="article-title" style="margin:0 0 10px;"></h1>
+                                <p class="article-tags" style="opacity:.65;margin:0 0 22px;" hidden></p>
+                                <div class="article-body" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;"></div>
+                        </article>
+                </div>
+        </div>
+`;

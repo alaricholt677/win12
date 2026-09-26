@@ -144,34 +144,7 @@ var news = {
     openArticle(index) {
         const article = this.currentArticles[index];
         if (!article) return;
-        const raw = article.raw || article;
-        const title = article.title || raw.name || raw.title || 'Untitled article';
-        const category = article.category || (Array.isArray(raw.tags) ? raw.tags.join(', ') : '');
-        const content = raw.content || raw.body || raw.description || raw.text || JSON.stringify(raw, null, 2);
-        const wrapper = document.createElement('div');
-        const titleElement = document.createElement('p');
-        titleElement.className = 'tit';
-        titleElement.textContent = title;
-        wrapper.appendChild(titleElement);
-        if (category) {
-            const categoryElement = document.createElement('p');
-            categoryElement.style.opacity = '0.65';
-            categoryElement.textContent = category;
-            wrapper.appendChild(categoryElement);
-        }
-        const contentElement = document.createElement('div');
-        contentElement.style.whiteSpace = 'pre-wrap';
-        contentElement.style.overflowWrap = 'anywhere';
-        contentElement.style.maxHeight = '55vh';
-        contentElement.style.overflow = 'auto';
-        contentElement.style.lineHeight = '1.6';
-        contentElement.textContent = String(content);
-        wrapper.appendChild(contentElement);
-        nts['news.article-reader'] = {
-            cnt: wrapper.innerHTML,
-            btn: [{ type: 'main', text: 'Close', js: 'closenotice();' }]
-        };
-        shownotice('news.article-reader');
+        apps.alaricholt677News.open(article);
     },
 
     async refresh() {
