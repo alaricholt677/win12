@@ -2433,7 +2433,21 @@ const windowMarkup = `	<div class="window defender" data-min-width="800" style="
                         </div>
                 </div>
                 <div class="loadback"><img src="icon/about.svg" class="icon"></div>
-                <div class="content" id="win-alaricholt677-news" style="overflow:auto;padding:28px;box-sizing:border-box;">
+                <style class="alaricholt677-news-theme">
+                #win-alaricholt677-news { color: inherit; background: transparent; }
+                #win-alaricholt677-news .article-card { color: inherit; background: color-mix(in srgb, currentColor 7%, transparent); border: 1px solid color-mix(in srgb, currentColor 12%, transparent) !important; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.08); transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease; }
+                #win-alaricholt677-news .article-card:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--theme-1) 14%, transparent); box-shadow: 0 12px 30px rgba(0,0,0,.14); }
+                #win-alaricholt677-news .article-card-media { position: relative; width: 100%; height: 150px; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--theme-1) 30%, transparent), color-mix(in srgb, var(--theme-2) 30%, transparent)); }
+                #win-alaricholt677-news .article-card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+                #win-alaricholt677-news .news-image-placeholder, #win-alaricholt677-news .article-image-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: inherit; background: linear-gradient(135deg, color-mix(in srgb, var(--theme-1) 22%, transparent), color-mix(in srgb, var(--theme-2) 22%, transparent)); }
+                #win-alaricholt677-news .news-image-placeholder { position: absolute; inset: 0; }
+                #win-alaricholt677-news .article-image-placeholder { width: 100%; min-height: 240px; border-radius: 14px; margin-bottom: 22px; }
+                #win-alaricholt677-news .news-image-placeholder i, #win-alaricholt677-news .article-image-placeholder i { font-size: 38px; color: var(--theme-1); }
+                #win-alaricholt677-news .news-image-placeholder span, #win-alaricholt677-news .article-image-placeholder span { opacity: .7; font-size: 14px; }
+                #win-alaricholt677-news [hidden] { display: none !important; }
+                @media (max-width: 700px) { #win-alaricholt677-news { padding: 18px !important; } #win-alaricholt677-news .homepage-grid { grid-template-columns: 1fr !important; } }
+        </style>
+        <div class="content" id="win-alaricholt677-news" style="overflow:auto;padding:28px;box-sizing:border-box;">
                         <section class="news-view home">
                                 <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;">
                                         <div><h1 style="margin:0 0 6px;">AlaricHolt677 News</h1><p style="margin:0;opacity:.65;">Community news from the AlaricHolt677 endpoint</p></div>

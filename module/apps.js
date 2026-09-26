@@ -2879,13 +2879,21 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                     card.type = 'button';
                     card.className = 'article-card a';
                     card.style.cssText = 'display:flex;flex-direction:column;text-align:left;border:0;padding:0;overflow:hidden;min-height:220px;';
+                    const media = document.createElement('div');
+                    media.className = 'article-card-media';
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'news-image-placeholder';
+                    placeholder.innerHTML = '<i class="bi bi-newspaper"></i><span>No image</span>';
+                    media.appendChild(placeholder);
                     if (article.image) {
                         const image = document.createElement('img');
                         image.src = article.image;
                         image.alt = '';
-                        image.style.cssText = 'width:100%;height:150px;object-fit:cover;';
-                        card.appendChild(image);
+                        image.addEventListener('load', () => placeholder.hidden = true);
+                        image.addEventListener('error', () => image.remove());
+                        media.appendChild(image);
                     }
+                    card.appendChild(media);
                     const inner = document.createElement('div');
                     inner.style.cssText = 'padding:16px;';
                     const title = document.createElement('h2');
@@ -2926,7 +2934,17 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
             root.querySelector('.article-body').textContent = String(body);
             const image = root.querySelector('.article-image');
             const imageUrl = article.image || raw.imageURL || raw.image || '';
+            const placeholder = root.querySelector('.article-image-placeholder');
             image.hidden = !imageUrl;
+            placeholder.hidden = !!imageUrl;
+            image.onerror = () => {
+                image.hidden = true;
+                placeholder.hidden = false;
+            };
+            image.onload = () => {
+                image.hidden = false;
+                placeholder.hidden = true;
+            };
             if (imageUrl) image.src = imageUrl;
             $('.window.alaricholt677-news>.titbar>p').text(title);
         }
