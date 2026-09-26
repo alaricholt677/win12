@@ -90,10 +90,15 @@ var news = {
                     }
 
                     const list = data.articles.map((value) => {
+                        const articleData = JSON.stringify(value, null, 2);
+                        const articleURL =
+                            'data:application/json;charset=utf-8,' +
+                            encodeURIComponent(articleData).replace(/'/g, '%27');
+
                         return {
                             title: value.name,
                             category: Array.isArray(value.tags) ? value.tags.join(', ') : '',
-                            url: value.url || this.url,
+                            url: articleURL,
                             image: value.imageURL,
                         };
                     });
