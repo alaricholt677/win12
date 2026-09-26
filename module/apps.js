@@ -2887,14 +2887,14 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                     media.className = 'article-card-media';
                     const placeholder = document.createElement('div');
                     placeholder.className = 'news-image-placeholder';
-                    placeholder.innerHTML = '<i class="bi bi-newspaper"></i><span>No image</span>';
+                    placeholder.innerHTML = '<img src="apps/images/alaricholt677-news/loading.gif" alt="Loading image">';
                     media.appendChild(placeholder);
                     if (article.image) {
                         const image = document.createElement('img');
                         image.src = article.image;
                         image.alt = '';
                         image.addEventListener('load', () => placeholder.hidden = true);
-                        image.addEventListener('error', () => { image.remove(); placeholder.hidden = false; });
+                        image.addEventListener('error', () => { image.remove(); placeholder.hidden = false; const fallback = placeholder.querySelector('img'); if (fallback) { fallback.src = 'apps/images/alaricholt677-news/missing.gif'; fallback.alt = 'Image unavailable'; } });
                         media.appendChild(image);
                     }
                     card.appendChild(media);
@@ -2943,10 +2943,11 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                 placeholder = document.createElement('div');
                 placeholder.className = 'article-image-placeholder';
                 const placeholderIcon = document.createElement('i');
-                placeholderIcon.className = 'bi bi-newspaper';
-                const placeholderText = document.createElement('span');
-                placeholderText.textContent = 'No image available';
-                placeholder.append(placeholderIcon, placeholderText);
+                placeholderIcon.remove();
+                const placeholderImage = document.createElement('img');
+                placeholderImage.src = 'apps/images/alaricholt677-news/missing.gif';
+                placeholderImage.alt = 'Image unavailable';
+                placeholder.appendChild(placeholderImage);
                 image.parentNode.insertBefore(placeholder, image);
             }
             const showPlaceholder = () => {

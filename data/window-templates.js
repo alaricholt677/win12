@@ -2435,12 +2435,13 @@ const windowMarkup = `	<div class="window defender" data-min-width="800" style="
                 <div class="loadback"><img src="icon/about.svg" class="icon"></div>
                 <style class="alaricholt677-news-theme">
                 #win-alaricholt677-news { color: inherit; background: transparent; }
-                #win-alaricholt677-news .article-card { color: inherit; background: var(--bg); border: 1px solid var(--hr) !important; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.08); transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease; }
-                #win-alaricholt677-news .article-card:hover { transform: translateY(-2px); background: var(--bgul); box-shadow: 0 12px 30px rgba(0,0,0,.14); }
+                #win-alaricholt677-news .article-card { color: inherit; background: var(--bg); border: 1px solid var(--hr) !important; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.08); transition: background-color .18s ease, box-shadow .18s ease; }
+                #win-alaricholt677-news .article-card:hover { background: var(--bgul); box-shadow: 0 12px 30px rgba(0,0,0,.14); }
                 #win-alaricholt677-news .article-card-media { position: relative; width: 100%; height: 150px; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--theme-1) 30%, transparent), color-mix(in srgb, var(--theme-2) 30%, transparent)); }
                 #win-alaricholt677-news .article-card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
                 #win-alaricholt677-news .news-image-placeholder, #win-alaricholt677-news .article-image-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: inherit; background: linear-gradient(135deg, color-mix(in srgb, var(--theme-1) 22%, transparent), color-mix(in srgb, var(--theme-2) 22%, transparent)); }
                 #win-alaricholt677-news .news-image-placeholder { position: absolute; inset: 0; }
+                #win-alaricholt677-news .news-image-placeholder img, #win-alaricholt677-news .article-image-placeholder img { width:100%; height:100%; object-fit:cover; display:block; }
                 #win-alaricholt677-news .article-image-placeholder { width: 100%; min-height: 240px; border-radius: 14px; margin-bottom: 22px; }
                 #win-alaricholt677-news .news-image-placeholder i, #win-alaricholt677-news .article-image-placeholder i { font-size: 38px; color: var(--theme-1); }
                 #win-alaricholt677-news .news-image-placeholder span, #win-alaricholt677-news .article-image-placeholder span { opacity: .7; font-size: 14px; }
@@ -2459,7 +2460,7 @@ const windowMarkup = `	<div class="window defender" data-min-width="800" style="
                         <section class="news-view article" hidden>
                                 <a class="a button" onclick="apps.alaricholt677News.showHome()" style="display:inline-flex;margin-bottom:20px;"><i class="bi bi-arrow-left"></i> All news</a>
                                 <article style="max-width:760px;margin:0 auto;">
-                                        <div class="article-image-placeholder"><i class="bi bi-newspaper"></i><span>No image available</span></div>
+                                        <div class="article-image-placeholder"><img src="apps/images/alaricholt677-news/missing.gif" alt="Image unavailable"></div>
                                         <img class="article-image" alt="" style="display:block;width:100%;max-height:320px;object-fit:cover;border-radius:14px;margin-bottom:22px;" hidden>
                                         <h1 class="article-title" style="margin:0 0 10px;"></h1>
                                         <p class="article-tags" style="opacity:.65;margin:0 0 22px;" hidden></p>
