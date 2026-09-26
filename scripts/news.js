@@ -100,6 +100,7 @@ var news = {
                             category: Array.isArray(value.tags) ? value.tags.join(', ') : '',
                             url: articleURL,
                             image: value.imageURL,
+                            raw: value,
                         };
                     });
 
@@ -138,6 +139,41 @@ var news = {
         this.selectedSource = index;
         this.refresh();
     },
+    currentArticles: [],
+
+    openArticle(index) {
+        const article = this.currentArticles[index];
+        if (!article) return;
+        const raw = article.raw || article;
+        const title = article.title || raw.name || raw.title || 'Untitled article';
+        const category = article.category || (Array.isArray(raw.tags) ? raw.tags.join(', ') : '');
+        const content = raw.content || raw.body || raw.description || raw.text || JSON.stringify(raw, null, 2);
+        const wrapper = document.createElement('div');
+        const titleElement = document.createElement('p');
+        titleElement.className = 'tit';
+        titleElement.textContent = title;
+        wrapper.appendChild(titleElement);
+        if (category) {
+            const categoryElement = document.createElement('p');
+            categoryElement.style.opacity = '0.65';
+            categoryElement.textContent = category;
+            wrapper.appendChild(categoryElement);
+        }
+        const contentElement = document.createElement('div');
+        contentElement.style.whiteSpace = 'pre-wrap';
+        contentElement.style.overflowWrap = 'anywhere';
+        contentElement.style.maxHeight = '55vh';
+        contentElement.style.overflow = 'auto';
+        contentElement.style.lineHeight = '1.6';
+        contentElement.textContent = String(content);
+        wrapper.appendChild(contentElement);
+        nts['news.article-reader'] = {
+            cnt: wrapper.innerHTML,
+            btn: [{ type: 'main', text: 'Close', js: 'closenotice();' }]
+        };
+        shownotice('news.article-reader');
+    },
+
     async refresh() {
         const contentEl = document.querySelector('#widgets>.news>.content');
         const contentNewsEl = document.querySelector('#widgets>.news>.content>.news-all');
@@ -155,13 +191,15 @@ var news = {
             return;
         }
         const genCardHTML = async (data, classList = '') => {
+            const articleIndex = this.currentArticles.indexOf(data);
             return `
 <div class="card ${classList}" style="background: url(${data.image}) right;">
     <p class="tit">${await this.parseToHTMLString(data.title)}</p>
-    <a class="a" onclick="openapp(\'edge\');window.setTimeout(() => {apps.edge.newtab();apps.edge.goto('${data.url}');}, 300);">详细信息 &gt;</a>
+    <a class="a" onclick="news.openArticle(${articleIndex});">Visit ></a>
 </div>
 `;
         };
+        this.currentArticles = data.data.slice();
         const topNews = data.data.shift();
         const topNewsHTML = await genCardHTML(topNews, 'top-news');
         let contentNews = [''];
