@@ -2434,12 +2434,23 @@ const windowMarkup = `	<div class="window defender" data-min-width="800" style="
                 </div>
                 <div class="loadback"><img src="icon/about.svg" class="icon"></div>
                 <div class="content" id="win-alaricholt677-news" style="overflow:auto;padding:28px;box-sizing:border-box;">
-                        <article style="max-width:760px;margin:0 auto;">
-                                <img class="article-image" alt="" style="display:block;width:100%;max-height:320px;object-fit:cover;border-radius:14px;margin-bottom:22px;" hidden>
-                                <h1 class="article-title" style="margin:0 0 10px;"></h1>
-                                <p class="article-tags" style="opacity:.65;margin:0 0 22px;" hidden></p>
-                                <div class="article-body" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;"></div>
-                        </article>
+                        <section class="news-view home">
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;">
+                                        <div><h1 style="margin:0 0 6px;">AlaricHolt677 News</h1><p style="margin:0;opacity:.65;">Community news from the AlaricHolt677 endpoint</p></div>
+                                        <a class="a button" onclick="apps.alaricholt677News.showHome()"><i class="bi bi-arrow-clockwise"></i> Refresh</a>
+                                </div>
+                                <p class="homepage-status">Loading news...</p>
+                                <div class="homepage-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;"></div>
+                        </section>
+                        <section class="news-view article" hidden>
+                                <a class="a button" onclick="apps.alaricholt677News.showHome()" style="display:inline-flex;margin-bottom:20px;"><i class="bi bi-arrow-left"></i> All news</a>
+                                <article style="max-width:760px;margin:0 auto;">
+                                        <img class="article-image" alt="" style="display:block;width:100%;max-height:320px;object-fit:cover;border-radius:14px;margin-bottom:22px;" hidden>
+                                        <h1 class="article-title" style="margin:0 0 10px;"></h1>
+                                        <p class="article-tags" style="opacity:.65;margin:0 0 22px;" hidden></p>
+                                        <div class="article-body" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;"></div>
+                                </article>
+                        </section>
                 </div>
         </div>
 `;

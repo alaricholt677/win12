@@ -2827,29 +2827,108 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
     },
     alaricholt677News: {
         currentArticle: null,
-        init: () => {},
+        endpoint: 'https:' + '//' + 'alaricholt677.github.io/news/news.json',
+        init: () => {
+            const app = apps.alaricholt677News;
+            if (app.currentArticle) {
+                app.renderArticle(app.currentArticle);
+                app.currentArticle = null;
+            } else app.showHome();
+        },
         open: (article) => {
-            apps.alaricholt677News.currentArticle = article;
+            const app = apps.alaricholt677News;
+            app.currentArticle = article;
             openapp('alaricholt677-news');
             window.requestAnimationFrame(() => {
-                const raw = article.raw || article;
-                const title = article.title || raw.name || raw.title || 'Untitled article';
-                const tags = article.category ||
-                    (Array.isArray(raw.tags) ? raw.tags.join(', ') : '');
-                const body = raw.content || raw.body || raw.description || raw.text ||
-                    JSON.stringify(raw, null, 2);
-                const root = document.getElementById('win-alaricholt677-news');
-                if (!root) return;
-                root.querySelector('.article-title').textContent = title;
-                root.querySelector('.article-tags').textContent = tags;
-                root.querySelector('.article-tags').hidden = !tags;
-                root.querySelector('.article-body').textContent = String(body);
-                const image = root.querySelector('.article-image');
-                const imageUrl = article.image || raw.imageURL || raw.image || '';
-                image.hidden = !imageUrl;
-                if (imageUrl) image.src = imageUrl;
-                $('.window.alaricholt677-news>.titbar>p').text(title);
+                app.renderArticle(article);
+                app.currentArticle = null;
             });
+        },
+        setView: (name) => {
+            const root = document.getElementById('win-alaricholt677-news');
+            if (!root) return;
+            root.querySelectorAll('.news-view').forEach((view) => view.hidden = true);
+            const view = root.querySelector('.news-view.' + name);
+            if (view) view.hidden = false;
+        },
+        showHome: async () => {
+            const app = apps.alaricholt677News;
+            const root = document.getElementById('win-alaricholt677-news');
+            if (!root) return;
+            $('.window.alaricholt677-news>.titbar>p').text('AlaricHolt677 News');
+            app.setView('home');
+            const grid = root.querySelector('.homepage-grid');
+            const status = root.querySelector('.homepage-status');
+            grid.replaceChildren();
+            status.hidden = false;
+            status.textContent = 'Loading news...';
+            try {
+                const response = await fetch(app.endpoint);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const payload = await response.json();
+                if (!Array.isArray(payload.articles)) throw new Error('The endpoint did not return an articles array.');
+                status.hidden = true;
+                payload.articles.forEach((raw) => {
+                    const article = {
+                        title: raw.name || raw.title || 'Untitled article',
+                        category: Array.isArray(raw.tags) ? raw.tags.join(', ') : '',
+                        image: raw.imageURL || raw.image || '',
+                        raw: raw
+                    };
+                    const card = document.createElement('button');
+                    card.type = 'button';
+                    card.className = 'article-card a';
+                    card.style.cssText = 'display:flex;flex-direction:column;text-align:left;border:0;padding:0;overflow:hidden;min-height:220px;';
+                    if (article.image) {
+                        const image = document.createElement('img');
+                        image.src = article.image;
+                        image.alt = '';
+                        image.style.cssText = 'width:100%;height:150px;object-fit:cover;';
+                        card.appendChild(image);
+                    }
+                    const inner = document.createElement('div');
+                    inner.style.cssText = 'padding:16px;';
+                    const title = document.createElement('h2');
+                    title.textContent = article.title;
+                    title.style.cssText = 'font-size:18px;margin:0 0 8px;';
+                    inner.appendChild(title);
+                    if (article.category) {
+                        const tags = document.createElement('p');
+                        tags.textContent = article.category;
+                        tags.style.cssText = 'opacity:.65;margin:0;';
+                        inner.appendChild(tags);
+                    }
+                    card.appendChild(inner);
+                    card.addEventListener('click', () => app.renderArticle(article));
+                    grid.appendChild(card);
+                });
+                if (!payload.articles.length) {
+                    status.hidden = false;
+                    status.textContent = 'No articles are currently available.';
+                }
+            } catch (error) {
+                status.hidden = false;
+                status.textContent = 'Unable to load news: ' + error.message;
+            }
+        },
+        renderArticle: (article) => {
+            const app = apps.alaricholt677News;
+            const raw = article.raw || article;
+            const title = article.title || raw.name || raw.title || 'Untitled article';
+            const tags = article.category || (Array.isArray(raw.tags) ? raw.tags.join(', ') : '');
+            const body = raw.content || raw.body || raw.description || raw.text || JSON.stringify(raw, null, 2);
+            const root = document.getElementById('win-alaricholt677-news');
+            if (!root) return;
+            app.setView('article');
+            root.querySelector('.article-title').textContent = title;
+            root.querySelector('.article-tags').textContent = tags;
+            root.querySelector('.article-tags').hidden = !tags;
+            root.querySelector('.article-body').textContent = String(body);
+            const image = root.querySelector('.article-image');
+            const imageUrl = article.image || raw.imageURL || raw.image || '';
+            image.hidden = !imageUrl;
+            if (imageUrl) image.src = imageUrl;
+            $('.window.alaricholt677-news>.titbar>p').text(title);
         }
     },
     word: {
