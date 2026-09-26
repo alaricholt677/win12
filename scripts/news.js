@@ -70,7 +70,46 @@ var news = {
                 }
             },
         },
-    ],
+        {
+            name: 'AlaricHolt677 新闻',
+            description: 'AlaricHolt677 社区新闻',
+            url: 'https://alaricholt677.github.io/news/news.json',
+            async getData() {
+                try {
+                    const response = await fetch(this.url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (!Array.isArray(data.articles)) {
+                        return {
+                            status: 'error',
+                            message: '返回结果中未包含文章列表',
+                        };
+                    }
+
+                    const list = data.articles.map((value) => {
+                        return {
+                            title: value.name,
+                            category: Array.isArray(value.tags) ? value.tags.join(', ') : '',
+                            url: value.url || this.url,
+                            image: value.imageURL,
+                        };
+                    });
+
+                    return {
+                        status: 'success',
+                        data: list,
+                    };
+                } catch (error) {
+                    return {
+                        status: 'error',
+                        error: error,
+                    };
+                }
+            },
+        },    ],
     setupExecuted: false,
     selectedSource: 0,
     setup() {
