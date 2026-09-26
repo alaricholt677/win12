@@ -71,8 +71,8 @@ var news = {
             },
         },
         {
-            name: 'AlaricHolt677 新闻',
-            description: 'AlaricHolt677 社区新闻',
+            name: 'AlaricHolt677 News',
+            description: 'Community news provided by AlaricHolt677',
             url: 'https://alaricholt677.github.io/news/news.json',
             async getData() {
                 try {
