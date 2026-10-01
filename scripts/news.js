@@ -165,10 +165,13 @@ var news = {
         }
         const genCardHTML = async (data, classList = '') => {
             const articleIndex = this.currentArticles.indexOf(data);
+            const action = this.selectedSource === 2
+                ? `news.openArticle(${articleIndex});`
+                : `openapp('edge');window.setTimeout(() => {apps.edge.newtab();apps.edge.goto('${data.url}');}, 300);`;
             return `
 <div class="card ${classList}" style="background: url(${data.image}) right;">
     <p class="tit">${await this.parseToHTMLString(data.title)}</p>
-    <a class="a" onclick="news.openArticle(${articleIndex});">Visit ></a>
+    <a class="a" onclick="${action}">详细信息 &gt;</a>
 </div>
 `;
         };
