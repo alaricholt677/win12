@@ -2880,7 +2880,7 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                 media.className = 'article-card-media';
                 const placeholder = document.createElement('div');
                 placeholder.className = 'news-image-placeholder';
-                placeholder.innerHTML = '<img src="apps/images/alaricholt677-news/loading.gif" alt="Loading image">';
+                placeholder.innerHTML = '<i class="spinner-border" aria-label="Loading"></i>';
                 media.appendChild(placeholder);
                 if (article.image) {
                     const image = document.createElement('img');
@@ -2892,8 +2892,8 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                         placeholder.hidden = false;
                         const fallback = placeholder.querySelector('img');
                         if (fallback) {
-                            fallback.src = 'apps/images/alaricholt677-news/missing.gif';
-                            fallback.alt = 'Image unavailable';
+                            fallback.remove();
+                            placeholder.innerHTML = '<i class="bi bi-image" aria-label="Image unavailable"></i>';
                         }
                     });
                     media.appendChild(image);
@@ -2938,9 +2938,11 @@ Micrȯsoft Windows [版本 12.0.39035.7324]
                 const placeholderIcon = document.createElement('i');
                 placeholderIcon.remove();
                 const placeholderImage = document.createElement('img');
-                placeholderImage.src = 'apps/images/alaricholt677-news/missing.gif';
-                placeholderImage.alt = 'Image unavailable';
-                placeholder.appendChild(placeholderImage);
+                placeholderImage.remove();
+                const missingIcon = document.createElement('i');
+                missingIcon.className = 'bi bi-image';
+                missingIcon.setAttribute('aria-label', 'Image unavailable');
+                placeholder.appendChild(missingIcon);
                 image.parentNode.insertBefore(placeholder, image);
             }
             const showPlaceholder = () => {
